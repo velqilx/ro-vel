@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Avatar Studio Pro</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 20px;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .stat-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #667eea;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .quick-actions {
+      display: grid;
+      gap: 10px;
+    }
+    
+    .action-btn {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+    
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
+    }
+    
+    .action-btn.primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+    
+    .action-btn.primary:hover {
+      background: linear-gradient(135deg, #764ba2, #667eea);
+    }
+    
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎨 Avatar Studio Pro</h1>
+  </div>
+  
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-value" id="outfitCount">0</div>
+      <div class="stat-label">Saved Outfits</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="itemCount">0</div>
+      <div class="stat-label">Items Today</div>
+    </div>
+  </div>
+  
+  <div class="quick-actions">
+    <button class="action-btn primary" onclick="openStudio()">
+      🎨 Open Avatar Studio
+    </button>
+    <button class="action-btn" onclick="randomOutfit()">
+      🎲 Generate Random Outfit
+    </button>
+    <button class="action-btn" onclick="viewTrending()">
+      📈 View Trending Items
+    </button>
+    <button class="action-btn" onclick="savedOutfits()">
+      💾 My Saved Outfits
+    </button>
+  </div>
+  
+  <div class="footer">
+    Avatar Studio Pro v1.0
+  </div>
+  
+  <script>
+    function openStudio() {
+      chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+        chrome.tabs.sendMessage(tabs[0].id, {action: 'openStudio'});
+      });
+    }
+    
+    function randomOutfit() {
+      chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+        chrome.tabs.sendMessage(tabs[0].id, {action: 'randomOutfit'});
+      });
+    }
+    
+    function viewTrending() {
+      chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+        chrome.tabs.sendMessage(tabs[0].id, {action: 'viewTrending'});
+      });
+    }
+    
+    function savedOutfits() {
+      chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+        chrome.tabs.sendMessage(tabs[0].id, {action: 'savedOutfits'});
+      });
+    }
+    
+    // Load stats
+    chrome.storage.local.get(['outfits', 'itemsToday'], (data) => {
+      document.getElementById('outfitCount').textContent = data.outfits?.length || 0;
+      document.getElementById('itemCount').textContent = data.itemsToday || 0;
+    });
+  </script>
+</body>
+</html>
