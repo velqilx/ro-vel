@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Avatar Studio Pro",
+  "version": "1.0.0",
+  "description": "The ultimate Roblox avatar designer - unlimited layers, 3D preview, outfit randomizer, and more!",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*.roblox.com/*",
+    "*://*.rbxcdn.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.roblox.com/*"],
+      "js": ["avatar-studio.js"],
+      "css": ["avatar-studio.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Avatar Studio Pro"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
